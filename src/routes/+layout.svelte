@@ -9,10 +9,4 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-<!-- <div>
-	<form>
-		<label>Search bar: <input type='text' placeholder='search bar'></label>
-	</form>
-</div> -->
-
 {@render children()}

@@ -37,6 +37,18 @@ export function createTask(todo: string) {
     todos.unshift(item);
 }
 
+export function editTask(id: number, task: string, complete: boolean) {
+    let item = getTodoItem(id);
+    
+    if (item == null) {
+        return false;
+    }
+
+    item.task = task;
+    item.complete = complete;
+    return true;
+}
+
 export function toggle(id: number) {
     let todo = getTodoItem(id);
     
