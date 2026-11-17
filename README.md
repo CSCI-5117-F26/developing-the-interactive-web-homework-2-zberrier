@@ -1,24 +1,56 @@
-# CSCI 5117 Fall 2026 -- Module 2 Homework
+# sv
 
+Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
 
-Instructions can be [found on canvas](https://canvas.umn.edu/courses/579310/pages/homework-2)
+## Creating a project
 
-Please fill out all of the following sections to help us grade your submission:
+If you're seeing this, you've probably already done this step. Congrats!
 
-## Student (to be completed individually)
+```sh
+# create a new project
+npx sv create my-app
+```
 
-* First Last, x500@umn.edu
+To recreate this project with the same configuration:
 
-## Link to Site
+```sh
+# recreate this project
+npx sv@1.3.0 create --template minimal --types ts --add prettier eslint sveltekit-adapter="adapter:auto" --install npm ./
+```
 
-<https://TODO.com/>
+## Adding features
 
-## Challenge Task
+Add features to your project with `sv add`:
 
-* I started the challenge task: [yes/no]
-* I completed the challenge task: [yes/no]
+```sh
+npx sv add
+```
 
+For example, to add Tailwind CSS:
 
-## Any Extra Notes?
+```sh
+npx sv add tailwindcss
+```
 
-Fill in this with anything else you would like us to know about your submission.
+## Developing
+
+Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+
+```sh
+npm run dev
+
+# or start the server and open the app in a new browser tab
+npm run dev -- --open
+```
+
+## Building
+
+To create a production version of your app:
+
+```sh
+npm run build
+```
+
+You can preview the production build with `npm run preview`.
+
+> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
