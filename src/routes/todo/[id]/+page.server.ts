@@ -1,9 +1,10 @@
-import { error } from '@sveltejs/kit';
+import { error, fail } from '@sveltejs/kit';
 import type { Actions } from './$types';
-import * as todos from '#lib/server/data.ts';
+import * as db from '#lib/server/mongo.server.ts';
 
-export function load({params}) {
-    const data = todos.getTodoItem(Number(params.id));
+export async function load({params}) {
+    const data = await db.getTodoItem(params.id);
+
     if (data == null) {
         error(404, 'Todo not found!');
     } 
@@ -13,19 +14,18 @@ export function load({params}) {
 export const actions = {
     edit: async ({request}) => {
         const formData = await request.formData();
-        console.log(formData);
 
-        const id = Number(formData.get('id'));
+        const id = String(formData.get('id'));
         const task = String(formData.get('task')).trim();
         const complete = formData.get('complete') != null;
 
         if (task == '') {
-            error(400, 'Cannot have empty task');
+            return fail(400, {task, missing: true});
         }
 
-        const res = todos.editTask(id, task, complete);
+        const res = await db.editTask(id, task, complete);
         if (res == false) {
-            error(400, 'Bad input, cannot find task');
+            error(400, 'Could not edit task');
         }
     }
 } satisfies Actions;

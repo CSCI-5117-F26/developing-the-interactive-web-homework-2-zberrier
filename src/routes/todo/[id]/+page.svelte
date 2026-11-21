@@ -12,8 +12,8 @@
         <button onclick={() => {editEnabled = !editEnabled}}>Edit</button>
     {:else}
         <form method='POST' action='?/edit'>
-            <input type='text' name='id' value={todoItem.id} hidden>
-            <input type='text' name='task' placeholder={todoItem.task}>
+            <input type='text' name='id' value={todoItem._id.$oid} hidden>
+            <input type='text' name='task' placeholder={todoItem.task} required>
             <label>Complete <input type='checkbox' name='complete' checked={todoItem.complete}></label>
             <button>Save</button>
         </form>

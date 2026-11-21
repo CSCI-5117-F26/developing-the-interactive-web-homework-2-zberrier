@@ -1,5 +1,9 @@
 <script lang='ts'>
     import { resolve } from '$app/paths';
+
+    // const {data} = $props();
+    // const {todos} = data
+    // console.log(todos);
 </script>
 
 <h1>Zoe's Todo List!</h1>

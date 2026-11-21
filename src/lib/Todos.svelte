@@ -2,10 +2,12 @@
     import { resolve } from '$app/paths';
     import { refreshAll } from '$app/navigation';
 
-    const props = $props();
-    let todos = $state(props.tasks);
+    const {tasks, filter, page} = $props();
+    let todos = $state(tasks);
+    // console.log(todos[0]._id);
+    // console.log(todos[0]._id.$oid);
 
-    async function toggle(id: number) {
+    async function toggle(id: string) {
         const res = await fetch('api/toggle', {
             method: 'PATCH',
             headers: {'Content-Type':'application/json'},
@@ -15,13 +17,13 @@
     }
 </script>
 
-<h1>{props.page}</h1>
+<h1>{page}</h1>
 <ul>
-    {#each todos as task (task.id)}
-        {#if props.filter == false || task.complete == true}
+    {#each todos as task}
+        {#if filter == false || task.complete == true}
             <div>
-                <input type='checkbox' bind:checked={task.complete} onchange={()=>{toggle(task.id)}}/>
-                <a href={resolve('/todo/[id]', {id: String(task.id)})} class:done={task.complete}>{task.task}</a>
+                <input type='checkbox' bind:checked={task.complete} onchange={()=>{toggle(task._id.$oid)}}/>
+                <a href={resolve('/todo/[id]', {id: task._id.$oid})} class:done={task.complete}>{task.task}</a>
             </div>
         {/if}
     {/each}

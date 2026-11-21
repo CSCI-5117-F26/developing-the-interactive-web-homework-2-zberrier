@@ -1,6 +1,6 @@
-export async function load({parent}) {
-    const data = await parent();
-    return {
-        data: data.data
-    };
+import type { PageLoad } from './$types';
+
+export const load: PageLoad = async ({parent}) => {
+    const {todos} = await parent();
+    return {todos};
 }

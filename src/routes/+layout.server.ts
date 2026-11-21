@@ -1,10 +1,7 @@
-import * as todos from '#lib/server/data.ts';
+import * as db from '#lib/server/mongo.server.ts';
 
 export const ssr = false;
 
-export function load() {
-    const data = todos.getTodos();
-    return {
-        data
-    };
+export async function load() {
+    return {todos: await db.getTodos()};
 }

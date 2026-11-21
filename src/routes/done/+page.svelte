@@ -3,7 +3,7 @@
     import {resolve} from '$app/paths';
 
     const {data} = $props();
-    const todos = $state(data.data);
+    const {todos} = $state(data);
 </script>
 
 <div id='done'>

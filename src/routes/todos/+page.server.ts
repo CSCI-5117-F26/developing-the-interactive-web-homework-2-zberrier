@@ -1,17 +1,20 @@
-import type { Actions } from './$types';
-import * as todos from '#lib/server/data.ts';
+import type { Actions, PageLoad } from './$types';
+import { fail } from '@sveltejs/kit';
+import * as db from '#lib/server/mongo.server.ts';
 
-export async function load({parent}) {
-    const data = await parent();
-    return {
-        data: data.data
-    };
+export const load: PageLoad = async ({parent}) => {
+    const {todos} = await parent();
+    return {todos};
 }
 
 export const actions = {
     create: async({request}) => {
         const formData = await request.formData();
-        const item = String(formData.get('item'));
-        todos.createTask(item);
+        const item = String(formData.get('item')).trim();
+        if (item == '') {
+            return fail(400, {item, missing: true})
+        }
+
+        db.createTask(item);
     }
 } satisfies Actions;
