@@ -16,7 +16,7 @@ export type Todos = {
 }
 
 export async function getTodos() {
-    const todos = await collection.find().toArray();
+    const todos = await collection.find().sort({_id: -1}).toArray();
     return EJSON.serialize(todos);
 }
 
