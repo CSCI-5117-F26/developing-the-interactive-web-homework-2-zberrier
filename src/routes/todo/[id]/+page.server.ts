@@ -16,7 +16,7 @@ export const actions = {
         const formData = await request.formData();
 
         const id = String(formData.get('id'));
-        const task = String(formData.get('task')).trim();
+        const task = String(formData.get('task') ?? '').trim();
         const complete = formData.get('complete') != null;
 
         if (task == '') {

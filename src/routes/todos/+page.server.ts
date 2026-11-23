@@ -10,7 +10,7 @@ export const load: PageLoad = async ({parent}) => {
 export const actions = {
     create: async({request}) => {
         const formData = await request.formData();
-        const item = String(formData.get('item')).trim();
+        const item = String(formData.get('item') ?? '').trim();
         if (item == '') {
             return fail(400, {item, missing: true})
         }

@@ -4,8 +4,6 @@
 
     const {tasks, filter, page} = $props();
     let todos = $state(tasks);
-    // console.log(todos[0]._id);
-    // console.log(todos[0]._id.$oid);
 
     async function toggle(id: string) {
         const res = await fetch('api/toggle', {

@@ -36,7 +36,9 @@
 		"vite": "^8.3.0"
 	},
 	"dependencies": {
+		"@better-auth/mongo-adapter": "^1.7.27",
 		"@vercel/functions": "^3.11.3",
+		"better-auth": "^1.7.27",
 		"mongodb": "^7.9.0"
 	}
 }
