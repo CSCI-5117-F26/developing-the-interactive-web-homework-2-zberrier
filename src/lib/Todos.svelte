@@ -5,11 +5,11 @@
     const {tasks, userId, filter, page} = $props();
     let todos = $state(tasks);
 
-    async function toggle(id: string) {
+    async function toggle(id: string, complete: boolean) {
         const res = await fetch('api/toggle', {
             method: 'PATCH',
             headers: {'Content-Type':'application/json'},
-            body: JSON.stringify({id, userId})
+            body: JSON.stringify({id, userId, complete})
         });
         if (res.ok) { await refreshAll(); }
     }
@@ -20,7 +20,7 @@
     {#each todos as task}
         {#if filter == false || task.complete == true}
             <div>
-                <input type='checkbox' bind:checked={task.complete} onchange={()=>{toggle(task._id.$oid)}}/>
+                <input type='checkbox' bind:checked={task.complete} onchange={()=>{toggle(task._id.$oid, task.complete)}}/>
                 <a href={resolve('/todo/[id]', {id: task._id.$oid})} class:done={task.complete}>{task.task}</a>
             </div>
         {/if}

@@ -46,34 +46,18 @@ export async function editTask(id: string, task: string, complete: boolean, user
     if (!ObjectId.isValid(id)) return false;
     if (!ObjectId.isValid(userId)) return false;
 
-    const item = await getTodoItem(id, userId);
-    if (item == null) return false;
-
-    const updatedItem = {
-        userId: new ObjectId(userId),
-        task: task,
-        complete: complete,
-        category: item.category
-    }
-    const res = await collection.replaceOne({_id: new ObjectId(id), userId: new ObjectId(userId)}, updatedItem);
+    const update = {$set: {task: task, complete: complete}};
+    const res = await collection.updateOne({_id: new ObjectId(id), userId: new ObjectId(userId)}, update);
 
     return (res.modifiedCount == 1 && res.matchedCount == 1); 
 }
 
-export async function toggle(id: string, userId: string) {
+export async function toggle(id: string, userId: string, complete: boolean) {
     if (!ObjectId.isValid(id)) return false;
     if (!ObjectId.isValid(userId)) return false;
 
-    const todo = await getTodoItem(id, userId);
-    if (todo == null) return false;
-
-    const updatedTodo = {
-        userId: new ObjectId(userId),
-        task: todo.task,
-        complete: !todo.complete,
-        category: todo.category
-    }
-    const res = await collection.replaceOne({_id: new ObjectId(id), userId: new ObjectId(userId)}, updatedTodo);
+    const update = {$set: {complete: !complete}};
+    const res = await collection.updateOne({_id: new ObjectId(id), userId: new ObjectId(userId)}, update);
 
     return (res.modifiedCount == 1 && res.matchedCount == 1);
 }
