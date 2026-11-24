@@ -1,10 +1,13 @@
 import { error, fail } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import * as db from '#lib/server/mongo.server.ts';
+import { auth } from '#lib/auth.ts';
 
-export async function load({params}) {
-    const data = await db.getTodoItem(params.id);
+export async function load({params, request}) {
+    const session = await auth.api.getSession({ headers: request.headers });
+    const userId = String(session?.user.id);
 
+    const data = await db.getTodoItem(params.id, userId);
     if (data == null) {
         error(404, 'Todo not found!');
     } 
@@ -13,8 +16,10 @@ export async function load({params}) {
 
 export const actions = {
     edit: async ({request}) => {
-        const formData = await request.formData();
+        const session = await auth.api.getSession({ headers: request.headers });
+        const userId = String(session?.user.id);
 
+        const formData = await request.formData();
         const id = String(formData.get('id'));
         const task = String(formData.get('task') ?? '').trim();
         const complete = formData.get('complete') != null;
@@ -23,7 +28,7 @@ export const actions = {
             return fail(400, {task, missing: true});
         }
 
-        const res = await db.editTask(id, task, complete);
+        const res = await db.editTask(id, task, complete, userId);
         if (res == false) {
             error(400, 'Could not edit task');
         }

@@ -1,10 +1,9 @@
 <script lang='ts'>
     import Todos from "#lib/Todos.svelte";
-	import { enhance } from "$app/forms";
     import { resolve } from '$app/paths';
 
     const { data } = $props();
-    const {todos} = data;
+    const {todos, userId} = data;
 </script>
 
 <div id='todos'>
@@ -13,6 +12,6 @@
         <button>Create Item</button>
     </form>
 
-    <Todos tasks={todos} filter={false} page='todos'/>
+    <Todos tasks={todos} userId={userId} filter={false} page='todos'/>
     <a href={resolve('/done')}>Done</a>
 </div>

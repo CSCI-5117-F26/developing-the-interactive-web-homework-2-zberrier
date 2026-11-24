@@ -2,14 +2,14 @@
     import { resolve } from '$app/paths';
     import { refreshAll } from '$app/navigation';
 
-    const {tasks, filter, page} = $props();
+    const {tasks, userId, filter, page} = $props();
     let todos = $state(tasks);
 
     async function toggle(id: string) {
         const res = await fetch('api/toggle', {
             method: 'PATCH',
             headers: {'Content-Type':'application/json'},
-            body: JSON.stringify({id})
+            body: JSON.stringify({id, userId})
         });
         if (res.ok) { await refreshAll(); }
     }

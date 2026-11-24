@@ -3,10 +3,10 @@
     import {resolve} from '$app/paths';
 
     const {data} = $props();
-    const {todos} = $state(data);
+    const {todos, userId} = data;
 </script>
 
 <div id='done'>
-    <Todos tasks={todos} filter={true} page='done'/>
+    <Todos tasks={todos} userId={userId} filter={true} page='done'/>
     <a href={resolve('/todos')}>Todos</a>
 </div>
