@@ -12,9 +12,3 @@
         <Todos tasks={todos} userId={userId} filter={true} page='Completed'/>
     </div>
 </div>
-
-<style>
-    #done {
-        display: flex;
-    }
-</style>
