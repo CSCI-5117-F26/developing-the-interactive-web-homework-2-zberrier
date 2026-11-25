@@ -11,7 +11,8 @@
     {:else}
         <form method='POST' action='?/edit' class='pure-form-stacked'>
             <input type='text' name='id' value={todoItem._id.$oid} hidden>
-            <input type='text' name='task' placeholder={todoItem.task} required>
+            <label>Task <input type='text' name='task' placeholder={todoItem.task} required></label>
+            <label>Category <input type='text' name='category'/></label>
             <label><input type='checkbox' name='complete' checked={todoItem.complete}> Complete </label>
             <button id='save' class='pure-button'>Save</button>
         </form>

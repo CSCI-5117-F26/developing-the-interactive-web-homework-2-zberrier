@@ -21,12 +21,13 @@ export const actions = {
         const id = String(formData.get('id'));
         const task = String(formData.get('task') ?? '').trim();
         const complete = formData.get('complete') != null;
+        const category = String(formData.get('category') ?? '').trim();
 
         if (task == '') {
             return fail(400, {task, missing: true});
         }
 
-        const res = await db.editTask(id, task, complete, userId);
+        const res = await db.editTask(id, task, complete, userId, category);
         if (res == false) {
             error(400, 'Could not edit task');
         }

@@ -52,11 +52,16 @@ export async function createTask(todo: string, userId: string, category?: string
     await collection.insertOne(item);
 }
 
-export async function editTask(id: string, task: string, complete: boolean, userId: string) {
+export async function editTask(id: string, task: string, complete: boolean, userId: string, category: string) {
     if (!ObjectId.isValid(id)) return false;
     if (!ObjectId.isValid(userId)) return false;
 
-    const update = {$set: {task: task, complete: complete}};
+    let update;
+    update = {$set: {task: task, complete: complete}};
+    if (category != '') {
+        update = {$set: {task: task, complete: complete, category: category}};
+    }
+
     const res = await collection.updateOne({_id: new ObjectId(id), userId: new ObjectId(userId)}, update);
 
     return (res.modifiedCount == 1 && res.matchedCount == 1); 
