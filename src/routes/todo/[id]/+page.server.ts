@@ -3,11 +3,9 @@ import type { Actions } from './$types';
 import * as db from '#lib/server/mongo.server.ts';
 import { auth } from '#lib/auth.ts';
 
-export async function load({params, request}) {
-    const session = await auth.api.getSession({ headers: request.headers });
-    const userId = String(session?.user.id);
-
-    const data = await db.getTodoItem(params.id, userId);
+export async function load({parent, params}) {
+    const {userId} = await parent();
+    const data = await db.getTodoItem(params.id, String(userId));
     if (data == null) {
         error(404, 'Todo not found!');
     } 

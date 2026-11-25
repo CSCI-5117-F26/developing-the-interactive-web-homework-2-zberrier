@@ -48,8 +48,7 @@
 	:global(.body) {
 		background-color: rgb(179, 198, 196);
 		display: flex;
-		flex-direction: column;
-		align-items: center;
+		justify-content: center;
 		height: 100vh;
 		font-size: 1.5em;
 	}

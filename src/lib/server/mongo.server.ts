@@ -1,12 +1,15 @@
 import { BSON, MongoClient, ObjectId } from 'mongodb';
 import { attachDatabasePool } from "@vercel/functions";
 import { MONGODB_URI } from '$app/env/private';
+import { error } from '@sveltejs/kit';
 export const EJSON = BSON.EJSON; 
 
 export const client = new MongoClient(MONGODB_URI);
 attachDatabasePool(client);
+
 export const database = client.db('todos');
 const collection = database.collection('todos');
+const categories = database.collection('categories');
 
 export type Todos = {
     userId: ObjectId,
@@ -15,10 +18,17 @@ export type Todos = {
     category: string
 }
 
-export async function getTodos(userId: string) {
+export async function getTodos(userId: string, category?: string) {
     if (!ObjectId.isValid(userId)) return false;
 
-    const todos = await collection.find({userId: new ObjectId(userId)}).sort({_id: -1}).toArray();
+    let filter;
+    if (category) {
+        filter = {userId: new ObjectId(userId), category: category};
+    } else {
+        filter = {userId: new ObjectId(userId)};
+    }
+
+    const todos = await collection.find(filter).sort({_id: -1}).toArray();
     return EJSON.serialize(todos);
 }
 
@@ -30,14 +40,14 @@ export async function getTodoItem(id: string, userId: string) {
     return item ? EJSON.serialize(item) : null;
 }
 
-export async function createTask(todo: string, userId: string) {
+export async function createTask(todo: string, userId: string, category?: string) {
     if (!ObjectId.isValid(userId)) return false;
 
     const item = {
         userId: new ObjectId(userId),
         task: todo,
         complete: false,
-        category: ''
+        category: category ?? ''
     }
     await collection.insertOne(item);
 }
@@ -56,8 +66,27 @@ export async function toggle(id: string, userId: string, complete: boolean) {
     if (!ObjectId.isValid(id)) return false;
     if (!ObjectId.isValid(userId)) return false;
 
-    const update = {$set: {complete: !complete}};
+    const update = {$set: {complete: complete}};
     const res = await collection.updateOne({_id: new ObjectId(id), userId: new ObjectId(userId)}, update);
 
     return (res.modifiedCount == 1 && res.matchedCount == 1);
+}
+
+export async function getCategories() {
+    const categoriesList = await categories.find().toArray();
+    return EJSON.serialize(categoriesList);
+}
+
+export async function createCategory(category: string) {
+    try {
+        await categories.insertOne({category: category});
+        return true;
+    } catch (error) {
+        error(400, 'Cannot create');
+    }    
+}
+
+export async function deleteCategory(category: string) {
+    const res = await categories.deleteOne({category: category});
+    return res.deletedCount == 1;
 }

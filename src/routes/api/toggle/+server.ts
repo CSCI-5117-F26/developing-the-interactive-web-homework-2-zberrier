@@ -6,7 +6,8 @@ export async function PATCH({request}) {
     const toggle = await db.toggle(id, userId, complete);
 
     if (!toggle) {
-        error(404, 'Id not found');
+        console.log(id);
+        error(404, 'ID not found');
     }
 
     return Response.json({

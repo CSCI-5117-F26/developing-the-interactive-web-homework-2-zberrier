@@ -15,17 +15,19 @@
     }
 </script>
 
-<h1>{page}</h1>
-<ul>
-    {#each todos as task}
-        {#if filter == false || task.complete == true}
-            <div>
-                <input type='checkbox' bind:checked={task.complete} onchange={()=>{toggle(task._id.$oid, task.complete)}}/>
-                <a href={resolve('/todo/[id]', {id: task._id.$oid})} class:done={task.complete}>{task.task}</a>
-            </div>
-        {/if}
-    {/each}
-</ul>
+<div id='todos'>
+    <h1>{page}</h1>
+    <ul>
+        {#each todos as task}
+            {#if filter == false || task.complete == true}
+                <div>
+                    <input type='checkbox' bind:checked={task.complete} onchange={()=>{toggle(task._id.$oid, task.complete)}}/>
+                    <a href={resolve('/todo/[id]', {id: task._id.$oid})} class:done={task.complete}>{task.task}</a>
+                </div>
+            {/if}
+        {/each}
+    </ul>
+</div>
 
 <style>
     h1 {
@@ -46,6 +48,11 @@
     }
 
     ul {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #todos {
         display: flex;
         flex-direction: column;
     }

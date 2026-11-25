@@ -18,7 +18,7 @@ export async function load({request, url}) {
         if (!session) {
             redirect(303, resolve('/'));
         } else {
-            return {user, todos: await db.getTodos(userId)};
+            return {user, userId, todos: await db.getTodos(userId)};
         }
     }
 }

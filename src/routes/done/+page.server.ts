@@ -1,10 +1,7 @@
 import type { PageLoad } from './$types';
-import { auth } from '#lib/auth.ts';
+import * as db from '#lib/server/mongo.server.ts';
 
-export const load: PageLoad = async ({parent, request}) => {
-    const session = await auth.api.getSession({ headers: request.headers });
-    const userId = String(session?.user.id);
-
-    const {todos} = await parent();
-    return {todos, userId};
+export const load: PageLoad = async ({parent}) => {
+    const {userId, todos} = await parent();
+    return {userId, todos, categories: await db.getCategories()};
 }
