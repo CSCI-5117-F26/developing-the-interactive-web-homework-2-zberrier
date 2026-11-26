@@ -12,6 +12,8 @@ Please fill out all of the following sections to help us grade your submission:
 ## Link to Site
 
 developing-the-interactive-web-home-three.vercel.app
+developing-the-interactive-web-homework-2-zberrie-berri075-6059.vercel.app (Should be the same, but in case the top link does not work)
+developing-the-interactive-web-homewor-git-4b2524-berri075-6059.vercel.app (Should be the same, but in case the top link does not work)
 
 ## Challenge Task
 
