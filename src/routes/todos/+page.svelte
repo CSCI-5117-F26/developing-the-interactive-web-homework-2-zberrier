@@ -5,7 +5,6 @@
 
     let { data } = $props();
     let {todos, userId, categories} = $derived(data);
-    console.log(todos);
 </script>
 
 <div id='todos' class='body'>

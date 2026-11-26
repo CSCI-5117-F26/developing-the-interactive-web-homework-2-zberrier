@@ -1,7 +1,6 @@
 import { BSON, MongoClient, ObjectId } from 'mongodb';
 import { attachDatabasePool } from "@vercel/functions";
 import { MONGODB_URI } from '$app/env/private';
-import { error } from '@sveltejs/kit';
 export const EJSON = BSON.EJSON; 
 
 export const client = new MongoClient(MONGODB_URI);
@@ -29,7 +28,6 @@ export async function getTodos(userId: string, category?: string) {
     }
 
     const todos = await collection.find(filter).sort({_id: -1}).toArray();
-    // console.log(EJSON.serialize(todos));
     return EJSON.serialize(todos);
 }
 
@@ -75,28 +73,30 @@ export async function toggle(id: string, userId: string, complete: boolean) {
     const update = {$set: {complete: complete}};
     const res = await collection.updateOne({_id: new ObjectId(id), userId: new ObjectId(userId)}, update);
 
-    console.log(id);
-    console.log(userId);
-    console.log(res);
-
     return (res.modifiedCount == 1 && res.matchedCount == 1);
 }
 
-export async function getCategories() {
-    const categoriesList = await categories.find().toArray();
+export async function getCategories(userId: string) {
+    if (!ObjectId.isValid(userId)) return false;
+
+    const categoriesList = await categories.find({userId: new ObjectId(userId)}).toArray();
     return EJSON.serialize(categoriesList);
 }
 
-export async function createCategory(category: string) {
+export async function createCategory(category: string, userId: string) {
+    if (!ObjectId.isValid(userId)) return false;
+
     try {
-        await categories.insertOne({category: category});
+        await categories.insertOne({category: category, userId: new ObjectId(userId)});
         return true;
     } catch (error) {
         error(400, 'Cannot create');
     }    
 }
 
-export async function deleteCategory(category: string) {
-    const res = await categories.deleteOne({category: category});
+export async function deleteCategory(category: string, userId: string) {
+    if (!ObjectId.isValid(userId)) return false;
+
+    const res = await categories.deleteOne({category: category, userId: new ObjectId(userId)});
     return res.deletedCount == 1;
 }

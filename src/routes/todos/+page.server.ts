@@ -5,7 +5,7 @@ import { auth } from '#lib/auth.ts';
 
 export const load: PageLoad = async ({parent}) => {
     const {todos, userId} = await parent();
-    return {todos, userId, categories: await db.getCategories()};
+    return {todos, userId, categories: await db.getCategories(userId)};
 }
 
 export const actions = {

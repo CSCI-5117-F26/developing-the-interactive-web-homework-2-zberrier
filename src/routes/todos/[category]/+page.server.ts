@@ -5,8 +5,6 @@ import { fail } from '@sveltejs/kit';
 
 export const load: PageLoad = async ({parent, params}) => {
     const {userId} = await parent();
-    console.log(await db.getTodos(userId, params.category))
-
     return {userId, category: params.category, todos: await db.getTodos(userId, params.category)};
 }
 

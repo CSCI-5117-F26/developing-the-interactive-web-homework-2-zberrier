@@ -13,7 +13,6 @@ export async function PATCH({request}) {
     const toggle = await db.toggle(id, String(session.user.id), complete);
 
     if (!toggle) {
-        console.log(id);
         error(404, 'ID not found');
     }
 
