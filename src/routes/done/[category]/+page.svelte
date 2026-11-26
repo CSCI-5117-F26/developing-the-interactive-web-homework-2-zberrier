@@ -1,8 +1,8 @@
 <script lang='ts'>
     import Todos from "#lib/Todos.svelte";
 
-    const {data} = $props();
-    const {todos, userId, category} = data;
+    let {data} = $props();
+    let {todos, userId, category} = $derived(data);
 </script>
 
 <div id={"done"+category} class='body doneCategory'>

@@ -2,8 +2,8 @@
     import Todos from "#lib/Todos.svelte";
     import Categories from "#lib/Categories.svelte";
 
-    const {data} = $props();
-    const {todos, userId, categories} = data;
+    let {data} = $props();
+    let {todos, userId, categories} = $derived(data);
 </script>
 
 <div id='done' class='body'>

@@ -1,7 +1,9 @@
 <script lang='ts'>
 	import { refreshAll } from '$app/navigation';
     import { resolve } from '$app/paths';
-    const { categories, path } = $props();
+
+    let props = $props();
+    let { categories, path } = $derived(props);
 
     let newCategory = $state('');
     async function createCategory() {

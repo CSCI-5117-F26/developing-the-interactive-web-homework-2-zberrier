@@ -9,7 +9,7 @@
 
 	async function signout() {
 		await authClient.signOut();
-		await goto(resolve('/'), { invalidateAll: true });
+		await goto(resolve('/'), { refreshAll: true });
 	}
 </script>
 
@@ -20,8 +20,8 @@
 </svelte:head>
 
 <div id='headerButtons'>
-	<button class='pure-button buttons' onclick={()=>{goto(resolve('/todos'), { invalidateAll: true })}}>Todos</button>
-	<button class='pure-button buttons' onclick={()=>{goto(resolve('/done'), { invalidateAll: true })}}>Completed</button>
+	<button class='pure-button buttons' onclick={()=>{goto(resolve('/todos'), { refreshAll: true })}}>Todos</button>
+	<button class='pure-button buttons' onclick={()=>{goto(resolve('/done'), { refreshAll: true })}}>Completed</button>
 	{#if data.user}
 		<button class='pure-button buttons' onclick={async()=>{await signout();}}>Logout</button>
 	{/if}

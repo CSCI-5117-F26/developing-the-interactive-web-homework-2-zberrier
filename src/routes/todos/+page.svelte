@@ -1,9 +1,11 @@
 <script lang='ts'>
     import Todos from "#lib/Todos.svelte";
     import Categories from "#lib/Categories.svelte";
+	import { enhance } from "$app/forms";
 
-    const { data } = $props();
-    const {todos, userId, categories} = $derived(data);
+    let { data } = $props();
+    let {todos, userId, categories} = $derived(data);
+    console.log(todos);
 </script>
 
 <div id='todos' class='body'>
@@ -14,7 +16,7 @@
         <Todos tasks={todos} userId={userId} filter={false} page='Todos'/>
     </div>
     <div id='createForm'>
-        <form method='POST' action='?/create' class='pure-form-stacked'>
+        <form method='POST' action='?/create' class='pure-form-stacked' use:enhance>
             <label>New Todo Item: <input type='text' name='item' required/></label>
             <button class='pure-button'>Create Item</button>
         </form>

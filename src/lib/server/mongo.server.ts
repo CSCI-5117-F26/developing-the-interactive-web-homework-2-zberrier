@@ -22,13 +22,14 @@ export async function getTodos(userId: string, category?: string) {
     if (!ObjectId.isValid(userId)) return false;
 
     let filter;
-    if (category) {
+    if (category != undefined) {
         filter = {userId: new ObjectId(userId), category: category};
     } else {
         filter = {userId: new ObjectId(userId)};
     }
 
     const todos = await collection.find(filter).sort({_id: -1}).toArray();
+    // console.log(EJSON.serialize(todos));
     return EJSON.serialize(todos);
 }
 
@@ -73,6 +74,10 @@ export async function toggle(id: string, userId: string, complete: boolean) {
 
     const update = {$set: {complete: complete}};
     const res = await collection.updateOne({_id: new ObjectId(id), userId: new ObjectId(userId)}, update);
+
+    console.log(id);
+    console.log(userId);
+    console.log(res);
 
     return (res.modifiedCount == 1 && res.matchedCount == 1);
 }

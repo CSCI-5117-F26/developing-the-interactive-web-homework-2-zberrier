@@ -2,11 +2,16 @@
     import { resolve } from '$app/paths';
     import { refreshAll } from '$app/navigation';
 
-    const {tasks, userId, filter, page} = $props();
-    let todos = $state(tasks);
+    // let {tasks, userId, filter, page} = $props();
+    // let todos = $state(tasks);
+    let props = $props();
+    let todos = $derived(props.tasks);
+    let userId = $derived(props.userId);
+    let filter = $derived(props.filter);
+    let page = $derived(props.page);
 
     async function toggle(id: string, complete: boolean) {
-        const res = await fetch('api/toggle', {
+        const res = await fetch('/api/toggle', {
             method: 'PATCH',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({id, userId, complete})

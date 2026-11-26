@@ -1,6 +1,8 @@
 <script lang='ts'>
-    const data = $props();
-    const todoItem = $state(data.data);
+	import { enhance } from "$app/forms";
+
+    let data = $props();
+    let todoItem = $derived(data.data);
     let editEnabled = $state(false);
 </script>
 
@@ -9,7 +11,7 @@
         <p>{todoItem.task}</p>
         <button id='edit' class='pure-button' onclick={() => {editEnabled = !editEnabled}}>Edit</button>
     {:else}
-        <form method='POST' action='?/edit' class='pure-form-stacked'>
+        <form method='POST' action='?/edit' class='pure-form-stacked' use:enhance>
             <input type='text' name='id' value={todoItem._id.$oid} hidden>
             <label>Task <input type='text' name='task' placeholder={todoItem.task} required></label>
             <label>Category <input type='text' name='category'/></label>
