@@ -66,8 +66,7 @@
     }
 
     .delete {
-        font-size: 0.8em;
+        font-size: 0.6em;
         background-color: rgb(240, 45, 14);
-        margin: 1em;
     }
 </style>
