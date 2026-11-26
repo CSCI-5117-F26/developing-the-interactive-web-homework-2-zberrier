@@ -20,10 +20,10 @@
 </svelte:head>
 
 <div id='headerButtons'>
-	<button class='pure-button' onclick={()=>{goto(resolve('/todos'), { invalidateAll: true })}}>Todos</button>
-	<button class='pure-button' onclick={()=>{goto(resolve('/done'), { invalidateAll: true })}}>Completed</button>
+	<button class='pure-button buttons' onclick={()=>{goto(resolve('/todos'), { invalidateAll: true })}}>Todos</button>
+	<button class='pure-button buttons' onclick={()=>{goto(resolve('/done'), { invalidateAll: true })}}>Completed</button>
 	{#if data.user}
-		<button class='pure-button' onclick={async()=>{await signout();}}>Logout</button>
+		<button class='pure-button buttons' onclick={async()=>{await signout();}}>Logout</button>
 	{/if}
 </div>
 
@@ -32,11 +32,14 @@
 <style>
 	#headerButtons {
 		background-color: rgb(84, 134, 131);
-		padding: 1em;
+		max-height: 10vh;
 		display: flex;
 		justify-content: flex-end;
-		gap: 1em;
 		font-size: 1.5em;
+	}
+
+	.buttons {
+		margin: 0.5em;
 	}
 
 	#headerButtons button {
@@ -47,10 +50,7 @@
 
 	:global(.body) {
 		background-color: rgb(179, 198, 196);
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		height: 100vh;
+		min-height: 91vh;
 		font-size: 1.5em;
 	}
 </style>

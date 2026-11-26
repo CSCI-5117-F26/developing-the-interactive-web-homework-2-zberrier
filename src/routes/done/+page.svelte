@@ -7,8 +7,29 @@
 </script>
 
 <div id='done' class='body'>
-    <Categories categories={categories} path='/done/[category]'/>
+    <div id='categories'>
+        <div>
+            <Categories categories={categories} path='/done/[category]'/>
+        </div>
+    </div>
     <div id='todos'>
         <Todos tasks={todos} userId={userId} filter={true} page='Completed'/>
     </div>
 </div>
+
+<style>
+    #done {
+        display: flex;
+        align-content: center;
+    }
+
+    #todos {
+        flex-grow: 4;
+    }
+
+    #categories {
+        flex-grow: 2;
+        display: flex;
+        justify-content: center;
+    }
+</style>

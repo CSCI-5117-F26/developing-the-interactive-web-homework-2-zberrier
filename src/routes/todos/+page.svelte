@@ -10,10 +10,11 @@
     <div id='categories'>
         <Categories categories={categories} path='/todos/[category]'/>
     </div>
-    <div id='todosList'>
+    <div id='todos'>
         <Todos tasks={todos} userId={userId} filter={false} page='Todos'/>
-
-        <form method='POST' action='?/create'>
+    </div>
+    <div id='createForm'>
+        <form method='POST' action='?/create' class='pure-form-stacked'>
             <label>New Todo Item: <input type='text' name='item' required/></label>
             <button class='pure-button'>Create Item</button>
         </form>
@@ -27,7 +28,9 @@
         border-radius: 0.5em;
     }
 
-    /* #todosList {
-        align-self: center;
-    } */
+    #todos {
+        display: flex;
+        justify-content: center;
+        flex-basis: 40%;
+    }
 </style>

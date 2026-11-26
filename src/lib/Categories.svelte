@@ -34,14 +34,14 @@
             {#each categories as category}
             <li>
                 <a href={resolve(path, {category: category.category})}>{category.category}</a>
-                <button class='pure-button' onclick={async ()=>{deleteCategory(category.category)}}>Delete</button>
+                <button class='pure-button delete' onclick={async ()=>{deleteCategory(category.category)}}>Delete</button>
             </li>
             {/each}
         </ul>
     </div>
     <div id='createCategories' class='pure-form-stacked'>
         <label>New Category <input type='text' name='category' bind:value={newCategory}/></label>
-        <button class='pure-button' onclick={async ()=>{createCategory()}}>Create</button>
+        <button id='create' class='pure-button' onclick={async ()=>{createCategory()}}>Create</button>
     </div>
 </div>
 
@@ -49,5 +49,23 @@
     #categories {
         display: flex;
         flex-direction: column;
+    }
+
+    li {
+        margin: 1em;
+    }
+
+    button {
+        border-radius: 0.5em;
+    }
+
+    #create {
+        background-color: rgb(91, 180, 80);
+    }
+
+    .delete {
+        font-size: 0.8em;
+        background-color: rgb(240, 45, 14);
+        margin: 1em;
     }
 </style>

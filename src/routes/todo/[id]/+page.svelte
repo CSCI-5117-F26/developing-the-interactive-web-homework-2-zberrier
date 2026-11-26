@@ -4,7 +4,7 @@
     let editEnabled = $state(false);
 </script>
 
-<div id={todoItem.id} class='body'>
+<div id={todoItem.id} class='body todo'>
     {#if !editEnabled}
         <p>{todoItem.task}</p>
         <button id='edit' class='pure-button' onclick={() => {editEnabled = !editEnabled}}>Edit</button>

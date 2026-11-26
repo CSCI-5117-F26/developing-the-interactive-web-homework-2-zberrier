@@ -20,7 +20,7 @@
     <ul>
         {#each todos as task}
             {#if filter == false || task.complete == true}
-                <div>
+                <div id='content'>
                     <input type='checkbox' bind:checked={task.complete} onchange={()=>{toggle(task._id.$oid, task.complete)}}/>
                     <a href={resolve('/todo/[id]', {id: task._id.$oid})} class:done={task.complete}>{task.task}</a>
                 </div>
@@ -32,6 +32,12 @@
 <style>
     h1 {
         font-weight: bold;
+    }
+
+    #content {
+        overflow: hidden;
+        display: flex;
+        gap: 1em;
     }
 
     a {
@@ -55,5 +61,6 @@
     #todos {
         display: flex;
         flex-direction: column;
+        max-width: 40vw;
     }
 </style>

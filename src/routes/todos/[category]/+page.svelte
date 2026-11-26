@@ -5,15 +5,42 @@
     const {todos, userId, category} = data;
 </script>
 
-<div id={"todos"+category} class='body'>
-    <div id='todosList'>
-        <Todos tasks={todos} userId={userId} filter={false} page='Todos'/>
-
-        <form method='POST' action='?/create'>
-            <input name='category' value={category} hidden>
-            <label>New Todo Item: <input type='text' name='item' required/></label>
-            <button class='pure-button'>Create Item</button>
-        </form>
-    </div>
-    
+<div id={"todos"+category} class='body category'>
+    <!-- <div id='category'> -->
+        <div id='todos'>
+            <div>
+                <Todos tasks={todos} userId={userId} filter={false} page='Todos'/>
+            </div>
+        </div>
+        <div id='createCategory'>
+            <form method='POST' action='?/create' class='pure-form-stacked'>
+                <input name='category' value={category} hidden>
+                <label>New Todo Item: <input type='text' name='item' required/></label>
+                <button id='createButton' class='pure-button'>Create Item</button>
+            </form>
+        </div>
+    <!-- </div> -->
 </div>
+
+<style>
+    .category {
+        display: flex;
+        align-content: center;
+    }
+    #todos {
+        flex-grow: 2;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    #createCategory {
+        flex-grow: 2;
+        display: flex;
+        justify-content: center;
+    }
+
+    #createButton {
+        background-color: rgb(91, 180, 80);
+        border-radius: 0.5em;
+    }
+</style>
